@@ -19,8 +19,8 @@ date(x.payment_processed_on), hs1.hierarchy_Code,hs1.hierarchy_Name;
 
 
 # pay Month wise
-SELECT hs.hierarchy_Code tryc,hs.hierarchy_Name tryn, CONCAT(bdb.pay_month,'') , bdb.pay_year,
-hs1.hierarchy_Code,hs1.hierarchy_Name,hs2.office_Name ,us.user_Name, COUNT(*) , SUM(bdb2.allowance), date(x.payment_processed_on)  
+SELECT hs.hierarchy_Code tryc,hs.hierarchy_Name tryn, CONCAT(bdb.pay_month,'') , CONCAT(bdb.pay_year,'')pyr,bdb.pay_year, 
+hs1.hierarchy_Code,hs1.hierarchy_Name,hs2.office_Name ,us.user_Name, COUNT(*) , SUM(bdb2.allowance), date(x.payment_processed_on) 
 FROM
 ctmis_master.payment_base x
 join ctmis_master.payment_bills pb on x.id=pb.payment_base_id
@@ -31,9 +31,11 @@ JOIN  pfmaster.hierarchy_setup hs1 on bdb.ddo_id =hs1.hierarchy_Id
 join pfmaster.seat_user_alloted sua on hs1.hierarchy_Id=sua.seat_Id
 join pfmaster.user_setup us on us.user_Id=sua.user_Id  
 join pfmaster.hierarchy_setup hs2 on hs1.parent_hierarchy=hs2.hierarchy_Id  
-where bdb.financial_year='2024-25' AND  date(x.payment_processed_on) BETWEEN '2024-04-01' AND '2024-06-06'
-and bdb.type='SB' AND bdb.sub_type='SB_SB' and sua.active_Status='Y'  
+where bdb.financial_year='2024-25' 
+AND  date(x.payment_processed_on) BETWEEN '2024-04-01' AND '2025-03-31'
+and bdb.type='SB' 
+AND bdb.sub_type='SB_SB' 
+and sua.active_Status='Y'  
 
-#AND hs1.hierarchy_Code='DAR/AAT/001'
- group by hs.hierarchy_Code,hs.hierarchy_Name,
-CONCAT(bdb.pay_month,'') , bdb.pay_year, hs1.hierarchy_Code,hs1.hierarchy_Name, date(x.payment_processed_on)
+ group by hs.hierarchy_Code,hs.hierarchy_Name, 
+CONCAT(bdb.pay_month,'') , CONCAT(bdb.pay_year,''),bdb.pay_year, hs1.hierarchy_Code,hs1.hierarchy_Name, date(x.payment_processed_on)
