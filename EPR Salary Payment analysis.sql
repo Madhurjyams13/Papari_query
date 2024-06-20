@@ -32,7 +32,7 @@ join pfmaster.seat_user_alloted sua on hs1.hierarchy_Id=sua.seat_Id
 join pfmaster.user_setup us on us.user_Id=sua.user_Id  
 join pfmaster.hierarchy_setup hs2 on hs1.parent_hierarchy=hs2.hierarchy_Id  
 where bdb.financial_year='2024-25' 
-AND  date(x.payment_processed_on) BETWEEN '2024-04-01' AND '2025-03-31'
+AND  date(x.payment_processed_on) BETWEEN DATE('2024-04-01') AND DATE (NOW())
 and bdb.type='SB' 
 AND bdb.sub_type='SB_SB' 
 and sua.active_Status='Y'  
